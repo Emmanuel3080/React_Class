@@ -162,9 +162,10 @@ body {
 
 
 .profileBody{
-  border: 1px solid black;
+  border: 4px thin black;
   width: 300px;
-  background-color: rgba(209, 206, 204, 0.573);
+  background-color: rgba(209, 206, 204, 0.205);
+  box-shadow: 0px 0px 10px rgb(128, 116, 112);
   border-radius: 10px;
   /* margin: auto; */
   margin: 1rem 1rem;

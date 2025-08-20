@@ -9,6 +9,11 @@ import SigninPage from "./Pages/SigninPage";
 import ProtectedRoute from "./Pages/ProtectedRoute";
 import Home from "./Pages/Home";
 import DasboardPage from "./Pages/DasboardPage";
+import AuthProvider from "./Contexts/AuthContext";
+import Products from "./Pages/Products";
+import ProductProvider from "./Contexts/ProductContext";
+import SingleProductsPage from "./Pages/singleProductsPage";
+import SingleProdutsContextProvider from "./Contexts/SingleProdutsContext";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,16 +21,33 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SigninPage />} />
+        <AuthProvider>
+          <ProductProvider>
+          
+              <Routes>
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/signin" element={<SigninPage />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Home />} />
-          </Route>
-          <Route path="/dashboard" element={<DasboardPage/>}/>
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/home" element={<Home />} />
+                </Route>
+                <Route path="/dashboard" element={<DasboardPage />} />
+                <Route path="/products" element={<Products />} />
 
-        </Routes>
+                <Route path="/single/:id" element={
+                  <SingleProdutsContextProvider>
+                    <SingleProductsPage/>
+                  </SingleProdutsContextProvider>
+                }/>
+                
+              </Routes>
+
+
+
+              
+            
+          </ProductProvider>
+        </AuthProvider>
       </BrowserRouter>
     </>
   );

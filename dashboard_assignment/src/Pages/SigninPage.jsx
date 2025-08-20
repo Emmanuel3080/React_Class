@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authContext } from "../Contexts/AuthContext";
 
 const SigninPage = () => {
+  const {user , signUp} = useContext(authContext)
+  // signUp()
+  // console.log(user);
+  
   const navigate = useNavigate();
   const [loading, setLoding] = useState(false);
   const [error, handleError] = useState("")
@@ -25,6 +30,9 @@ const SigninPage = () => {
     }));
   };
 
+  // useEffect(()=>{
+  //   signUp()
+  // })
   const handleSubmission = async (e) => {
     e.preventDefault();
     setLoding(true);
@@ -53,6 +61,10 @@ const SigninPage = () => {
       setLoding(false);
     }
   };
+
+  useEffect(()=>{
+    signUp()
+  },[authContext])
   return (
     <>
       <div className="form">

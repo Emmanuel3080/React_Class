@@ -5,7 +5,7 @@ const SingleProduct = () => {
     const [userData, setUserData] = useState({})
 
     const {id} = useParams()
-    console.log(id);
+    console.log(id)
     
 
     const getSingleProducts = async()=>{

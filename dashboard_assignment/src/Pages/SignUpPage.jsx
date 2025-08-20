@@ -1,7 +1,13 @@
-import React, { use, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authContext } from "../Contexts/AuthContext";
 
 const SignUpPage = () => {
+
+  // console.log(signUp);
+  // signUp()
+  
+  const {user, signUp} = useContext(authContext)
   const [loading, setLoading] = useState(false);
   const [userData , setUserData] = useState({})
   const [emailNotification, setEmailNotication] = useState(false);
@@ -54,6 +60,10 @@ const SignUpPage = () => {
       setEmailNotication(false)
     }
   };
+
+  useEffect(()=>{
+    signUp()
+  },[authContext])
   return (
     <>
       <div className="form">
@@ -94,6 +104,7 @@ const SignUpPage = () => {
           </div>
 
           {emailNotification ? `Sending Email Verification to ${userData.email}` : ""}
+          {/* <p>{emailNotification}</p> */}
           {/* <p>{userData.email}</p> */}
 
           <div className="btns">

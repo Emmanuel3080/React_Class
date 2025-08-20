@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [loading, setLoading] = useState(false);
+  const [userData , setUserData] = useState({})
+  const [emailNotification, setEmailNotication] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-//   console.log(formData);
+  //   console.log(formData);
 
   const handleUserInput = (e) => {
     const { name, value } = e.target;
@@ -26,6 +28,8 @@ const SignUpPage = () => {
   const handleSubmission = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setEmailNotication(true)
+
     try {
       const response = await fetch(`${baseUrl}/user/signup`, {
         method: "POST",
@@ -37,13 +41,17 @@ const SignUpPage = () => {
       const data = await response.json();
       console.log(data);
       if (data.Status == "success") {
+        setUserData(data.User)
         alert("Welcome Redirectinggg✅");
+        setEmailNotication(data.EmailMessage);
+        alert(data.EmailMessage)
         navigate("/signin");
       }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+      setEmailNotication(false)
     }
   };
   return (
@@ -85,9 +93,12 @@ const SignUpPage = () => {
             />
           </div>
 
+          {emailNotification ? `Sending Email Verification to ${userData.email}` : ""}
+          {/* <p>{userData.email}</p> */}
+
           <div className="btns">
             <button type="submit" className="btnSubmit" disabled={loading}>
-             {loading ? "Creatingg Acount.." : "Create Account"}
+              {loading ? "Creatingg Acount.." : "Create Account"}
             </button>
           </div>
           <p>

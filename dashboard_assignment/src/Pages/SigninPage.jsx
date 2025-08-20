@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const SigninPage = () => {
   const navigate = useNavigate();
   const [loading, setLoding] = useState(false);
+  const [error, handleError] = useState("")
 //   const [submitting , setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -41,6 +42,9 @@ const SigninPage = () => {
         alert(`Welocomee ${data.User.name}`)
         localStorage.setItem("token", data.Token)
         navigate("/dashboard")
+      }
+      else if(data.Status == "error"){
+        handleError(data.Message)
       }
       
     } catch (error) {
@@ -82,7 +86,7 @@ const SigninPage = () => {
            {loading ? "Authenticating User..." : "Log in"}
             </button>
           </div>
-          {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
           <p>
             Don't have an account? <a href="/signup">Create Account</a>
